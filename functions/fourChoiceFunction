@@ -1,0 +1,17 @@
+def A():
+  print("A")
+def menu():
+  menu='''
+  1-A
+  2-B
+  3-C
+  4-Quit'''
+  return menu
+print(menu())
+while(True):
+  ch = int(input("Choice? "))
+  if(ch==4): break
+  if(ch<1 and ch<4): continue
+  if(ch==1): A()
+  elif(ch==2): B()
+  elif(ch==3): C()

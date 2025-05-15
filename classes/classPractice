@@ -1,0 +1,41 @@
+'''
+class Movie:
+    def __init__(self, title, runTime, rating):
+        self.title =  title
+        self.runTime = runTime
+        self.rating = rating
+
+    def __str__(self):
+        return f"Title: {self.title}, Runtime: {self.runTime}, Rating: {self.rating}"
+    
+movie1 = Movie("Star Wars",  93, "PG")
+movie2 = Movie("Garden State", 104, "R")
+movie3 = Movie("Iron Man", 122, "PG-13")
+
+
+print("-"*20)
+#change an item about the class``
+'''
+print("-"*20)
+
+class Food:
+    def __init__(self,name,  price, calories, fats):
+        self.name =  name
+        self.price = price
+        self.calories   = calories
+        self.fats =  fats
+
+    def __str__(self):
+        return f"Name: {self.name}   Price: {self.price}   Calories: {self.calories}   Fats: {self.fats}"
+
+fries =  Food("Fries", 3.49, 550, 12)
+
+
+pizza =  Food("Pizza", 3.29, 250, 25)
+taco =  Food("Tacos", 1.29, 220, 16)
+
+
+
+print(fries)
+print(pizza)
+print(taco)

@@ -1,0 +1,15 @@
+class Player:
+    def __init__(self, team, number, name, position):
+        self.team = team
+        self.number = number
+        self.name = name
+        self.position = position
+
+    def __str__(self):
+        return f"Team: {self.team}   Number: {self.number}   Name: {self.name}   Position: {self.position}"
+        
+        
+player1 = Player("Colts", 12, "Andrew Luck", "QB")
+player2 = Player("Bills", 40, "Von Miller", "DE")
+
+print(player1)
