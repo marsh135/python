@@ -1,0 +1,43 @@
+def adder(x, y):
+  return x + y 
+def subber(x,y):
+  return x - y
+def multer(x, y):
+  return x* y 
+def divver(x, y):
+  return x/y
+def idiv(x,y):
+  return x//y
+def exp(x,y):
+  return x**y
+
+while True:
+  a =  int(input("Enter a number:" ))
+  op = input("Choose +   -    *   /:  ")
+  b = int(input("Another one: "))
+  
+  if(op == "+"):
+    res = adder(a,b)
+  elif(op == "-"):
+    res = subber(a,b)
+  elif(op == "*"):
+    res = multer(a,b)
+  elif(op == "/"):
+    res = divver(a,b)
+  else:
+    print("INVALID")
+  
+  print()
+  print(a,op,b,"=",res) #comma concatentation
+  print("-_"*20)
+  print()
+  #print(str(a) + " - " + str(b) + " = " + str(diff)) # plus concat
+  #print(f"{a} * {b} = {prod}") #f string
+  #print(f"{a} / {b} = {quot:.2f}") # f string w/ rounding
+  
+
+
+
+
+
+
