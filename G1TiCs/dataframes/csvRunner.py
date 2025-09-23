@@ -50,3 +50,51 @@ students_df['Major'].value_counts().plot(kind='bar', title='Number of Students p
 plt.xlabel('Major')
 plt.ylabel('Number of Students')
 plt.show()
+
+import matplotlib.pyplot as plt
+
+students_df['Major'].value_counts().plot(kind='bar')
+plt.title("Number of Students per Major")
+plt.xlabel("Major")
+plt.ylabel("Count")
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+
+students_df.groupby('Year')['GPA'].mean().plot(kind='barh', color='skyblue')
+plt.title("Average GPA by Year")
+plt.xlabel("Average GPA")
+plt.ylabel("Year")
+plt.tight_layout()
+plt.show()
+
+students_df['GPA'].plot(kind='hist', bins=20, color='purple', edgecolor='black')
+plt.title("GPA Distribution")
+plt.xlabel("GPA")
+plt.ylabel("Number of Students")
+plt.show()
+
+plt.scatter(students_df['Credits_Completed'], students_df['GPA'], alpha=0.6)
+plt.title("GPA vs. Credits Completed")
+plt.xlabel("Credits Completed")
+plt.ylabel("GPA")
+plt.show()
+
+plt.scatter(
+    students_df['Credits_Completed'],
+    students_df['GPA'],
+    c=students_df['Sports_Played'],  # color by number of sports
+    cmap='viridis',
+    alpha=0.7
+)
+plt.colorbar(label='Sports Played')
+plt.title("GPA vs Credits Completed (Colored by Sports Played)")
+plt.xlabel("Credits Completed")
+plt.ylabel("GPA")
+plt.show()
+
+students_df['Year'].value_counts().plot(kind='pie', autopct='%1.1f%%')
+plt.title("Students per Year")
+plt.ylabel("")  # remove y-axis label
+plt.show()
+
