@@ -12,7 +12,7 @@ for i in range(10):
 print(randomNums)  # The full list of random numbers
 
 print("The largest number is:", max(randomNums))        # Maximum number
-print("The smallest number is:", min(randomNums))       # Minimum number
+mber
 print("The sum of all numbers is:", sum(randomNums))    # Sum of all numbers
 print("The average of the numbers is:", sum(randomNums) / len(randomNums))  # Average
 

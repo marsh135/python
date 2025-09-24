@@ -1,4 +1,5 @@
 import pandas as pd
+import seaborn as sns
 import random
 import matplotlib.pyplot as plt
 
@@ -52,7 +53,7 @@ plt.ylabel('Number of Students')
 plt.show()
 
 import matplotlib.pyplot as plt
-
+"""
 students_df['Major'].value_counts().plot(kind='bar')
 plt.title("Number of Students per Major")
 plt.xlabel("Major")
@@ -97,4 +98,19 @@ students_df['Year'].value_counts().plot(kind='pie', autopct='%1.1f%%')
 plt.title("Students per Year")
 plt.ylabel("")  # remove y-axis label
 plt.show()
+"""
+gpa_pivot = students_df.pivot_table(
+    values='GPA', 
+    index='Major', 
+    columns='Year', 
+    aggfunc='mean'
+)
 
+# Plot heatmap
+plt.figure(figsize=(10, 6))
+sns.heatmap(gpa_pivot, annot=True, cmap='coolwarm', fmt=".2f")
+plt.title("Average GPA Heatmap by Major and Year")
+plt.xlabel("Year")
+plt.ylabel("Major")
+plt.tight_layout()
+plt.show()

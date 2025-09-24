@@ -7,7 +7,7 @@ last_names = ["Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Mille
 majors = ["Mathematics", "Science", "Business", "Art", "Engineering", "History", "Literature", "Computer Science", "Biology", "Chemistry", "Physics", "Economics", "Psychology", "Sociology", "Philosophy"]
 years = ["Freshman", "Sophomore", "Junior", "Senior", "Graduate"]
 names = []
-for i in range(100000):
+for i in range(1000000):
     names.append(f"{random.choice(first_names)} {random.choice(last_names)}")
 
 # Generate random student data
