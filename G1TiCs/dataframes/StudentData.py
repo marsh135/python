@@ -7,7 +7,7 @@ last_names = ["Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Mille
 majors = ["Mathematics", "Science", "Business", "Art", "Engineering", "History", "Literature", "Computer Science", "Biology", "Chemistry", "Physics", "Economics", "Psychology", "Sociology", "Philosophy"]
 years = ["Freshman", "Sophomore", "Junior", "Senior", "Graduate"]
 names = []
-for i in range(1000000):
+for i in range(10000000):
     names.append(f"{random.choice(first_names)} {random.choice(last_names)}")
 
 # Generate random student data
@@ -25,5 +25,5 @@ students_df = pd.DataFrame(data)
 
 #print(round(students_df.describe()))
 
-students_df.to_csv('students_data1000000.csv', index=False) # Save to CSV file
+students_df.to_csv('students_data10000000.csv', index=False) # Save to CSV file
 #print("DataFrame saved to 'students_data.csv'")
