@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-pennData =  pd.read_csv('dataframes/pennData.csv')
+pennData =  pd.read_csv('pennDataG2.csv')
 
 
 df =  pd.DataFrame(pennData)
@@ -16,10 +16,10 @@ df.groupby('Year')['GPA'].mean().plot(kind='bar', color='green', edgecolor='blac
 plt.title('Average GPA by Year')
 plt.xlabel('Year')
 plt.ylabel('Average GPA')
-#plt.show()
+plt.show()
 
 df['GPA'].plot(kind='hist', bins=5,edgecolor='black')
 plt.title('GPA Distribution')
 plt.xlabel('GPA')
 plt.ylabel('Number of Students')
-#plt.show()
+plt.show()
