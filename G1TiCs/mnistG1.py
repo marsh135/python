@@ -78,6 +78,8 @@ model = tf.keras.models.Sequential([
     tf.keras.layers.Dense(128, activation='relu'), #fully connected layer with 128 neurons
     tf.keras.layers.Dropout(0.5), #third dropout layer
     tf.keras.layers.Dense(num_classes, activation='softmax')    #output layer, one neuron per class, softmax activation for probabilities
+    
+    
 ])
 
 model.compile(optimizer=tf.keras.optimizers.RMSprop(epsilon=1e-08), loss='categorical_crossentropy', metrics=['acc']) #lower the loss with cross entropy

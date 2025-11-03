@@ -2,7 +2,7 @@ import pandas as pd
 import seaborn as sns
 import random
 import matplotlib.pyplot as plt
-df =  pd.read_csv("pennDataB3.csv")
+df =  pd.read_csv("dataframes/students_data10000.csv")
 students_df = pd.DataFrame(df)
 print("Head of the DataFrame:")
 print(students_df.head()) #.head() shows the first 5 rows of the dataframe
