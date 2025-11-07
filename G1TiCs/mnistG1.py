@@ -130,13 +130,11 @@ ax[1].set_ylabel('Accuracy')
 plt.tight_layout()  # Adjust layout to prevent overlap between subplots
 plt.show()  # Show the figure
 
-
 #predict the test data
 test_loss, test_acc = model.evaluate(x_test, y_test)
 print('Test accuracy:', test_acc)
 
 #generate the confusion matrix
-
 # Predict the values from the testing dataset
 Y_pred = model.predict(x_test)
 # Convert predictions classes to one hot vectors 
