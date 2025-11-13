@@ -7,32 +7,22 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import random
 import keras
+from keras import layers
+
 
 # Enable TensorFlow to use the Metal backend for Apple Silicon (M1/M2/M4)
 import os
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 os.environ['TF_METAL_DEVICE'] = 'gpu'
 #print out versions of libaries
-print("Tensorflow: ", tf.__version__ , " Seaborn:" , sns.__version__)
 
 ex = random.randint(0,50000)
 
 #load the data set
 from keras.datasets import cifar10
-#create the training and testing data frames
-#(training images, training labels), (testing images, testing labels)
 (x_train, y_train), (x_test, y_test) = cifar10.load_data()
-#show the number of examples in each labeled set
 
-#sns.countplot(x=y_train)
-#show the plot!
-#plt.show()
 
-#check to make sure there are NO values that are not a number (NaN)
-#print("Any NaN Training:", np.isnan(x_train).any())
-#print("Any NaN Testing: ", np.isnan(x_test).any())
-
-#tell the model what shape to expect
 input_shape = (32,32,3) #28x28 p0x, 1 color channel (grayscale) - 3 for RGB
 
 #reshape the training and testing data
@@ -42,47 +32,53 @@ x_train = x_train/255.0 #normalize the data to be between 0 and 1
 x_test = x_test.astype('float32')
 x_test = x_test/255.0 #normalize the data to be between 0 and 1
 
-# Convert the labels to one-hot encoded vectors.
-# This changes the labels from single integers (e.g., 3) to vectors (e.g., [0,0,0,1,0,0,0,0,0,0])
-# which is required for many neural network classification models.
+
 from keras.utils import to_categorical
 y_train = to_categorical(y_train, 10)
 y_test = to_categorical(y_test, 10)
 
-#show an example image and its label
-# Display the example image.
-# x_train[ex] selects the ex-th image, which has shape (28, 28, 1).
-# [:,:,0] selects all rows and columns, and the first (and only) channel (since it's grayscale).
-plt.imshow(x_train[ex][:,:,0])
-plt.show()
-print()
-print("-_"*40)
-print(y_train[ex])
-print("\n\n\\n")
 
-batch_size = 128    #cannot store all data in memory at once, so we batch it. More complicated data will require smaller batches
+batch_size = 64    #cannot store all data in memory at once, so we batch it. More complicated data will require smaller batches
 num_classes = 10  #number of output classes, 10 for MNIST (digits 0-9)
-epochs = 10 # how many times to go through the data
+epochs = 25 # how many times to go through the data
 
-#build the model
+data_augmentation = tf.keras.Sequential([
+      layers.RandomCrop(32, 32),          # Random crop (keeps image 32x32)
+      layers.RandomFlip("horizontal"),    # Random horizontal flip
+      layers.RandomRotation(0.1),         # Random rotation ±10%
+      layers.RandomContrast(0.1),         # "ColorJitter"-like: random contrast
+])
 
 model = tf.keras.models.Sequential([
 
-    #MODEL A
+    data_augmentation, 
+  
+    tf.keras.layers.Conv2D(64, (3,3), padding='same', activation='relu', input_shape=input_shape),  # First convolutional layer
+    tf.keras.layers.BatchNormalization(),  # Batch normalization for faster convergence
+    tf.keras.layers.Conv2D(64, (3,3), padding='same', activation='relu'),  # Second convolutional layer
+    tf.keras.layers.BatchNormalization(),
+    tf.keras.layers.MaxPool2D(pool_size=(2,2)),  # First pooling layer
+    tf.keras.layers.Dropout(0.3),  # Dropout to reduce overfitting
 
-    tf.keras.layers.Conv2D(32, (5,5), padding='same', activation='relu', input_shape=input_shape),  #first layer needs to know input shape
-    #32 kernals, 5x5 size, same padding means input and output are the same size, relu activation, f(x)= max(0,x)
-    tf.keras.layers.Conv2D(32, (5,5), padding='same', activation='relu'),  #second layer
-    tf.keras.layers.MaxPool2D(), #pooling layer to reduce size
-    tf.keras.layers.Dropout(0.25), #dropout layer to reduce overfitting, randomly turns off 25% of neurons during training
-    tf.keras.layers.Conv2D(64, (3,3), padding='same', activation='relu'), #third layer
-    tf.keras.layers.Conv2D(64, (3,3), padding='same', activation='relu'), #fourth layer
-    tf.keras.layers.MaxPool2D(strides=(2,2)), #second pooling layer
-    tf.keras.layers.Dropout(0.25),  #second dropout layer
-    tf.keras.layers.Flatten(),  #flatten the 2D matrices into 1D vectors for the dense layers
-    tf.keras.layers.Dense(128, activation='relu'), #fully connected layer with 128 neurons
-    tf.keras.layers.Dropout(0.5), #third dropout layer
-    tf.keras.layers.Dense(num_classes, activation='softmax')    #output layer, one neuron per class, softmax activation for probabilities
+    tf.keras.layers.Conv2D(128, (3,3), padding='same', activation='relu'),  # Third convolutional layer
+    tf.keras.layers.BatchNormalization(),
+    tf.keras.layers.Conv2D(128, (3,3), padding='same', activation='relu'),  # Fourth convolutional layer
+    tf.keras.layers.BatchNormalization(),
+    tf.keras.layers.MaxPool2D(pool_size=(2,2)),  # Second pooling layer
+    tf.keras.layers.Dropout(0.4),  # Dropout to reduce overfitting
+
+    tf.keras.layers.Conv2D(256, (3,3), padding='same', activation='relu'),  # Fifth convolutional layer
+    tf.keras.layers.BatchNormalization(),
+    tf.keras.layers.Conv2D(256, (3,3), padding='same', activation='relu'),  # Sixth convolutional layer
+    tf.keras.layers.BatchNormalization(),
+    tf.keras.layers.MaxPool2D(pool_size=(2,2)),  # Third pooling layer
+    tf.keras.layers.Dropout(0.5),  # Dropout to reduce overfitting
+
+    tf.keras.layers.Flatten(),  # Flatten the 2D matrices into 1D vectors
+    tf.keras.layers.Dense(512, activation='relu'),  # Fully connected layer with 512 neurons
+    tf.keras.layers.BatchNormalization(),
+    tf.keras.layers.Dropout(0.5),  # Dropout to reduce overfitting
+    tf.keras.layers.Dense(num_classes, activation='softmax')  # Output layer with softmax activation
     
 
 
@@ -107,7 +103,7 @@ callbacks = myCallback()
 #Test the model:
 history = model.fit(x_train, y_train,
                     batch_size=batch_size,
-                    epochs=2,
+                    epochs=epochs,
                     validation_split=0.1,)
                     #callbacks=[callbacks])
 
