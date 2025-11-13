@@ -67,22 +67,29 @@ epochs = 10 # how many times to go through the data
 #build the model
 
 model = tf.keras.models.Sequential([
+
+    #MODEL A
+
     tf.keras.layers.Conv2D(32, (5,5), padding='same', activation='relu', input_shape=input_shape),  #first layer needs to know input shape
     #32 kernals, 5x5 size, same padding means input and output are the same size, relu activation, f(x)= max(0,x)
-    #tf.keras.layers.Conv2D(32, (5,5), padding='same', activation='relu'),  #second layer
+    tf.keras.layers.Conv2D(32, (5,5), padding='same', activation='relu'),  #second layer
     tf.keras.layers.MaxPool2D(), #pooling layer to reduce size
     tf.keras.layers.Dropout(0.25), #dropout layer to reduce overfitting, randomly turns off 25% of neurons during training
     tf.keras.layers.Conv2D(64, (3,3), padding='same', activation='relu'), #third layer
     tf.keras.layers.Conv2D(64, (3,3), padding='same', activation='relu'), #fourth layer
-    #tf.keras.layers.MaxPool2D(strides=(2,2)), #second pooling layer
-    #tf.keras.layers.Dropout(0.25),  #second dropout layer
+    tf.keras.layers.MaxPool2D(strides=(2,2)), #second pooling layer
+    tf.keras.layers.Dropout(0.25),  #second dropout layer
     tf.keras.layers.Flatten(),  #flatten the 2D matrices into 1D vectors for the dense layers
     tf.keras.layers.Dense(128, activation='relu'), #fully connected layer with 128 neurons
     tf.keras.layers.Dropout(0.5), #third dropout layer
     tf.keras.layers.Dense(num_classes, activation='softmax')    #output layer, one neuron per class, softmax activation for probabilities
     
-    
+
+
 ])
+
+
+
 
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['acc']) #lower the loss with cross entropy
 #especially useful when using one-hot encoded labels vs. sparse/softmax labels
@@ -100,7 +107,7 @@ callbacks = myCallback()
 #Test the model:
 history = model.fit(x_train, y_train,
                     batch_size=batch_size,
-                    epochs=1,
+                    epochs=2,
                     validation_split=0.1,)
                     #callbacks=[callbacks])
 
@@ -155,3 +162,32 @@ plt.xlabel('Predicted Label')
 plt.ylabel('True Label')
 plt.title('Confusion Matrix')
 plt.show()
+# Visualize the activations of each layer for a sample image
+sample_image = x_test[0]  # Select a sample image from the test set
+sample_image = np.expand_dims(sample_image, axis=0)  # Add batch dimension
+
+# Create a model that outputs the activations of each layer
+layer_outputs = [layer.output for layer in model.layers]
+activation_model = tf.keras.models.Model(inputs=model.inputs, outputs=layer_outputs)
+
+# Get the activations for the sample image
+activations = activation_model.predict(sample_image)
+
+# Plot the activations for each layer
+for layer_index, activation in enumerate(activations):
+  num_filters = activation.shape[-1]  # Number of filters in the layer
+  size = activation.shape[1]  # Size of the feature map
+
+  # Create a grid to display the activations
+  grid_size = int(np.ceil(np.sqrt(num_filters)))
+  fig, axes = plt.subplots(grid_size, grid_size, figsize=(12, 12))
+  fig.suptitle(f'Layer {layer_index + 1} Activations', fontsize=16)
+
+  for i in range(grid_size * grid_size):
+    ax = axes[i // grid_size, i % grid_size]
+    if i < num_filters:
+      ax.imshow(activation[0, :, :, i], cmap='viridis')
+    ax.axis('off')
+
+  plt.tight_layout()
+  plt.show()

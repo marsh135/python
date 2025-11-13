@@ -104,3 +104,33 @@ confusion_mtx = tf.math.confusion_matrix(Y_true, Y_pred_classes)
 plt.figure(figsize=(10, 8))
 sns.heatmap(confusion_mtx, annot=True, fmt='g')
 plt.show()
+
+# Visualize the activations of each layer for a sample image
+sample_image = x_test[0]  # Select a sample image from the test set
+sample_image = np.expand_dims(sample_image, axis=0)  # Add batch dimension
+
+# Create a model that outputs the activations of each layer
+layer_outputs = [layer.output for layer in model.layers]
+activation_model = tf.keras.models.Model(inputs=model.inputs, outputs=layer_outputs)
+
+# Get the activations for the sample image
+activations = activation_model.predict(sample_image)
+
+# Plot the activations for each layer
+for layer_index, activation in enumerate(activations):
+    num_filters = activation.shape[-1]  # Number of filters in the layer
+    size = activation.shape[1]  # Size of the feature map
+
+# Create a grid to display the activations
+grid_size = int(np.ceil(np.sqrt(num_filters)))
+fig, axes = plt.subplots(grid_size, grid_size, figsize=(12, 12))
+fig.suptitle(f'Layer {layer_index + 1} Activations', fontsize=16)
+
+for i in range(grid_size * grid_size):
+    ax = axes[i // grid_size, i % grid_size]
+    if i < num_filters:
+        ax.imshow(activation[:, i], cmap='viridis')
+        ax.axis('off')
+
+plt.tight_layout()
+plt.show()
