@@ -40,7 +40,7 @@ y_test = to_categorical(y_test, 10)
 
 batch_size = 64    #cannot store all data in memory at once, so we batch it. More complicated data will require smaller batches
 num_classes = 10  #number of output classes, 10 for MNIST (digits 0-9)
-epochs = 25 # how many times to go through the data
+epochs = 3 # how many times to go through the data
 
 data_augmentation = tf.keras.Sequential([
       layers.RandomCrop(32, 32),          # Random crop (keeps image 32x32)
