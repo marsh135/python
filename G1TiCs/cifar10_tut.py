@@ -40,7 +40,7 @@ y_test = to_categorical(y_test, 10)
 
 batch_size = 64    #cannot store all data in memory at once, so we batch it. More complicated data will require smaller batches
 num_classes = 10  #number of output classes, 10 for MNIST (digits 0-9)
-epochs = 3 # how many times to go through the data
+epochs = 10 # how many times to go through the data
 
 data_augmentation = tf.keras.Sequential([
       layers.RandomCrop(32, 32),          # Random crop (keeps image 32x32)
@@ -53,31 +53,31 @@ model = tf.keras.models.Sequential([
 
     data_augmentation, 
   
-    tf.keras.layers.Conv2D(64, (3,3), padding='same', activation='relu', input_shape=input_shape),  # First convolutional layer
+    tf.keras.layers.Conv2D(64, (5,5), padding='same', activation='relu', input_shape=input_shape),  # First convolutional layer
     tf.keras.layers.BatchNormalization(),  # Batch normalization for faster convergence
-    tf.keras.layers.Conv2D(64, (3,3), padding='same', activation='relu'),  # Second convolutional layer
+    tf.keras.layers.Conv2D(64, (5,5), padding='same', activation='relu'),  # Second convolutional layer
     tf.keras.layers.BatchNormalization(),
     tf.keras.layers.MaxPool2D(pool_size=(2,2)),  # First pooling layer
-    tf.keras.layers.Dropout(0.3),  # Dropout to reduce overfitting
+    #tf.keras.layers.Dropout(0.3),  # Dropout to reduce overfitting
 
     tf.keras.layers.Conv2D(128, (3,3), padding='same', activation='relu'),  # Third convolutional layer
     tf.keras.layers.BatchNormalization(),
     tf.keras.layers.Conv2D(128, (3,3), padding='same', activation='relu'),  # Fourth convolutional layer
     tf.keras.layers.BatchNormalization(),
     tf.keras.layers.MaxPool2D(pool_size=(2,2)),  # Second pooling layer
-    tf.keras.layers.Dropout(0.4),  # Dropout to reduce overfitting
+    #tf.keras.layers.Dropout(0.4),  # Dropout to reduce overfitting
 
     tf.keras.layers.Conv2D(256, (3,3), padding='same', activation='relu'),  # Fifth convolutional layer
     tf.keras.layers.BatchNormalization(),
     tf.keras.layers.Conv2D(256, (3,3), padding='same', activation='relu'),  # Sixth convolutional layer
     tf.keras.layers.BatchNormalization(),
     tf.keras.layers.MaxPool2D(pool_size=(2,2)),  # Third pooling layer
-    tf.keras.layers.Dropout(0.5),  # Dropout to reduce overfitting
+   #tf.keras.layers.Dropout(0.5),  # Dropout to reduce overfitting
 
     tf.keras.layers.Flatten(),  # Flatten the 2D matrices into 1D vectors
     tf.keras.layers.Dense(512, activation='relu'),  # Fully connected layer with 512 neurons
     tf.keras.layers.BatchNormalization(),
-    tf.keras.layers.Dropout(0.5),  # Dropout to reduce overfitting
+    #tf.keras.layers.Dropout(0.5),  # Dropout to reduce overfitting
     tf.keras.layers.Dense(num_classes, activation='softmax')  # Output layer with softmax activation
     
 
