@@ -34,6 +34,7 @@ x_test = x_test/255.0 #normalize the data to be between 0 and 1
 
 
 from keras.utils import to_categorical
+from keras.datasets import cifar100
 y_train = to_categorical(y_train, 100)
 y_test = to_categorical(y_test, 100)
 
@@ -150,9 +151,21 @@ Y_true = np.argmax(y_test, axis=1)
 confusion_mtx = tf.math.confusion_matrix(Y_true, Y_pred_classes) 
 
 # Define class labels
-class_labels = ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
+_, (x_test, y_test) = cifar100.load_data(label_mode='fine')
+class_labels = [
+  'apple', 'aquarium_fish', 'baby', 'bear', 'beaver', 'bed', 'bee', 'beetle', 'bicycle', 'bottle',
+  'bowl', 'boy', 'bridge', 'bus', 'butterfly', 'camel', 'can', 'castle', 'caterpillar', 'cattle',
+  'chair', 'chimpanzee', 'clock', 'cloud', 'cockroach', 'couch', 'crab', 'crocodile', 'cup', 'dinosaur',
+  'dolphin', 'elephant', 'flatfish', 'forest', 'fox', 'girl', 'hamster', 'house', 'kangaroo', 'keyboard',
+  'lamp', 'lawn_mower', 'leopard', 'lion', 'lizard', 'lobster', 'man', 'maple_tree', 'motorcycle', 'mountain',
+  'mouse', 'mushroom', 'oak_tree', 'orange', 'orchid', 'otter', 'palm_tree', 'pear', 'pickup_truck', 'pine_tree',
+  'plain', 'plate', 'poppy', 'porcupine', 'possum', 'rabbit', 'raccoon', 'ray', 'road', 'rocket',
+  'rose', 'sea', 'seal', 'shark', 'shrew', 'skunk', 'skyscraper', 'snail', 'snake', 'spider',
+  'squirrel', 'streetcar', 'sunflower', 'sweet_pepper', 'table', 'tank', 'telephone', 'television', 'tiger', 'tractor',
+  'train', 'trout', 'tulip', 'turtle', 'wardrobe', 'whale', 'willow_tree', 'wolf', 'woman', 'worm'
+]
 
-plt.figure(figsize=(10, 8))
+plt.figure(figsize=(20, 16))
 sns.heatmap(confusion_mtx, annot=True, fmt='g', xticklabels=class_labels, yticklabels=class_labels)
 plt.xlabel('Predicted Label')
 plt.ylabel('True Label')
