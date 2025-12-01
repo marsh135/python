@@ -5,7 +5,7 @@ import numpy as np
 
 
 
-df = pd.read_csv("surveyb2.csv", dtype=str)
+df = pd.read_csv("B2APCSP/surveyb2.csv", dtype=str)
 df = df.applymap(lambda x: x.strip().title() if isinstance(x, str) else x)
 df["nap"] = pd.to_numeric(df["nap"], errors="coerce")
 dish_cols = [c for c in df.columns if c.startswith("dish")]
