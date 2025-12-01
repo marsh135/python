@@ -200,7 +200,7 @@ for i_episode in range(num_episodes):
             break
 
         # Render every 50 episodes
-        if i_episode % 50 == 0:
+        if i_episode % 20 == 0:
             frame = env.render()
             show_frame(frame)
 

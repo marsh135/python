@@ -59,26 +59,25 @@ model = tf.keras.models.Sequential([
     tf.keras.layers.Conv2D(64, (5,5), padding='same', activation='relu'),  # Second convolutional layer
     tf.keras.layers.BatchNormalization(),
     tf.keras.layers.MaxPool2D(pool_size=(2,2)),  # First pooling layer
-    #tf.keras.layers.Dropout(0.3),  # Dropout to reduce overfitting
-
+    tf.keras.layers.Dropout(0.3),  # Dropout to reduce overfitting
     tf.keras.layers.Conv2D(128, (3,3), padding='same', activation='relu'),  # Third convolutional layer
     tf.keras.layers.BatchNormalization(),
     tf.keras.layers.Conv2D(128, (3,3), padding='same', activation='relu'),  # Fourth convolutional layer
     tf.keras.layers.BatchNormalization(),
     tf.keras.layers.MaxPool2D(pool_size=(2,2)),  # Second pooling layer
-    #tf.keras.layers.Dropout(0.4),  # Dropout to reduce overfitting
+    tf.keras.layers.Dropout(0.4),  # Dropout to reduce overfitting
 
     tf.keras.layers.Conv2D(256, (3,3), padding='same', activation='relu'),  # Fifth convolutional layer
     tf.keras.layers.BatchNormalization(),
     tf.keras.layers.Conv2D(256, (3,3), padding='same', activation='relu'),  # Sixth convolutional layer
     tf.keras.layers.BatchNormalization(),
     tf.keras.layers.MaxPool2D(pool_size=(2,2)),  # Third pooling layer
-   #tf.keras.layers.Dropout(0.5),  # Dropout to reduce overfitting
+    tf.keras.layers.Dropout(0.5),  # Dropout to reduce overfitting
 
     tf.keras.layers.Flatten(),  # Flatten the 2D matrices into 1D vectors
     tf.keras.layers.Dense(512, activation='relu'),  # Fully connected layer with 512 neurons
     tf.keras.layers.BatchNormalization(),
-    #tf.keras.layers.Dropout(0.5),  # Dropout to reduce overfitting
+    tf.keras.layers.Dropout(0.5),  # Dropout to reduce overfitting
     tf.keras.layers.Dense(num_classes, activation='softmax')  # Output layer with softmax activation
     
 
