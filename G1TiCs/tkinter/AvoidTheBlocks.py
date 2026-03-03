@@ -56,7 +56,7 @@ def move_left(event):
     if px1<=0:
         canvas.move(player, WIDTH, 0)
     else:
-        canvas.move(player, -20, 0)
+        canvas.move(player, -10, 0)
     
 
 
@@ -65,7 +65,7 @@ def move_right(event):
     if px2>=WIDTH:
         canvas.move(player, -WIDTH, 0)
     else:
-        canvas.move(player, 20, 0)
+        canvas.move(player, 10, 0)
 
 
 #binds
@@ -127,7 +127,7 @@ def game_loop():
     if random.randint(1, 50) == 1:
         spawn_bonus()  
     for block in blocks[:]:
-        canvas.move(block, 0, 10) #standard move
+        canvas.move(block, 0, 5) #standard move
         
         ex1, ey1, ex2, ey2 = canvas.bbox(block)
         px1, py1, px2, py2 = canvas.bbox(player)
