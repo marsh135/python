@@ -1,0 +1,13 @@
+#Mac
+.DS_Store
+
+#Python
+__pycache__/
+*.pyc
+
+#Virtual Environment
+venv/
+.env/
+
+#VS Code
+.vscode/
