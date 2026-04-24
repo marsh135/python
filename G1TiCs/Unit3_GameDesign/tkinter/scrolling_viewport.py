@@ -1,67 +1,57 @@
 import tkinter as tk
 
-VIEW_SIZE = 400      # Size of the visible canvas area
-WORLD_SIZE = 1200    # Size of the full world
-PLAYER_SIZE = 30     # Size of the player square
-STEP = 20            # Distance moved per key press
+VIEW_SIZE = 400  #size of the viewport
+WORLD_SIZE = 1200 #size of the world
+PLAYER_SIZE = 30 # size of the player
+STEP = 20 #how much player moves per button press
 
-root = tk.Tk()
-root.title("Scrolling Canvas Demo")
+root = tk.Tk()  #standard tk
+root.title("Scrolling Canvas Demo") #lipstick
 
 canvas = tk.Canvas(
-    root,
-    width=VIEW_SIZE,
-    height=VIEW_SIZE,
-    bg="white",
-    scrollregion=(0, 0, WORLD_SIZE, WORLD_SIZE),  # Full scrollable area
-    highlightthickness=2,                         # Border thickness around the canvas
-    highlightbackground="black",                  # Border color
+    root,  #target
+    width=VIEW_SIZE,  #size of the frame
+    height=VIEW_SIZE,  # ""
+    bg="white", # set bg color
+    scrollregion=(0, 0, WORLD_SIZE, WORLD_SIZE), #set canvas extents, 0,0 -> 1200, 1200
+    highlightthickness=2, # I actually have no idea
+    highlightbackground="black", # edge boundary color
 )
-canvas.pack(padx=150, pady=150)
+canvas.pack(padx=150, pady=150)  #border on the actual window
 
-# Draw a grid so movement is easier to see
-for line in range(0, WORLD_SIZE + 1, 100):
-    canvas.create_line(line, 0, line, WORLD_SIZE, fill="#d9d9d9")
-    canvas.create_line(0, line, WORLD_SIZE, line, fill="#d9d9d9")
+# Draw world
+for line in range(0, WORLD_SIZE + 1, 100):  #draw a line ever4y 100 px jsut to show the canvas  "moving"
+    canvas.create_line(line, 0, line, WORLD_SIZE, fill="#d9d9d9")  # one is horizontal
+    canvas.create_line(0, line, WORLD_SIZE, line, fill="#d9d9d9") # one is vertical
 
-# Draw the outer border of the world
-canvas.create_rectangle(
-    5, 5, WORLD_SIZE - 5, WORLD_SIZE - 5,
-    outline="black",
-    width=3
-)
+canvas.create_rectangle(5, 5, WORLD_SIZE - 5, WORLD_SIZE - 5, outline="black", width=3) # this is the border on the world.  higher = thicker
 
-# Start the player near the middle of the visible area
-start_x = VIEW_SIZE // 2
-start_y = VIEW_SIZE // 2
-
-player = canvas.create_rectangle(
-    start_x,
-    start_y,
-    start_x + PLAYER_SIZE,
-    start_y + PLAYER_SIZE,
-    fill="royalblue",
-    outline="black",
+start_x = VIEW_SIZE // 2  #start in the middle
+start_y = VIEW_SIZE // 2 # start in the middle
+player = canvas.create_rectangle(  # make our player - this is boiler plate
+    start_x,  #600
+    start_y, #600
+    start_x + PLAYER_SIZE, #630
+    start_y + PLAYER_SIZE, #630
+    fill="royalblue",  #color
+    outline="black", # outline color
 )
 
 
 def center_view_on_player():
-    """Scroll the canvas so the player stays centered when possible."""
-    x1, y1, x2, y2 = canvas.coords(player)
+    x1, y1, x2, y2 = canvas.coords(player)  #center the coords that the player starts at
     player_center_x = (x1 + x2) / 2
     player_center_y = (y1 + y2) / 2
 
-    # Prevent the viewport from scrolling past the world edges
-    max_offset = WORLD_SIZE - VIEW_SIZE
+    max_offset = WORLD_SIZE - VIEW_SIZE  #keeps the frame in view - essentially, makes sure that you always ahve the frame filled with world context
     left = min(max(player_center_x - VIEW_SIZE / 2, 0), max_offset)
     top = min(max(player_center_y - VIEW_SIZE / 2, 0), max_offset)
 
-    canvas.xview_moveto(left / WORLD_SIZE)
-    canvas.yview_moveto(top / WORLD_SIZE)
+    canvas.xview_moveto(left / WORLD_SIZE)  #move the canvas
+    canvas.yview_moveto(top / WORLD_SIZE) # move the canvas
 
 
-def move_player(dx, dy):
-    """Move the player, keeping it inside the world boundaries."""
+def move_player(dx, dy): #move the player
     x1, y1, x2, y2 = canvas.coords(player)
 
     if x1 + dx < 0:
@@ -78,11 +68,10 @@ def move_player(dx, dy):
     center_view_on_player()
 
 
-# Arrow keys move the player
-root.bind("<Left>", lambda _event: move_player(-STEP, 0))
-root.bind("<Right>", lambda _event: move_player(STEP, 0))
-root.bind("<Up>", lambda _event: move_player(0, -STEP))
-root.bind("<Down>", lambda _event: move_player(0, STEP))
+root.bind("<Left>", lambda event: move_player(-STEP, 0)) # AH - LAMBDA Functions
+root.bind("<Right>", lambda event: move_player(STEP, 0)) # A lambda funciton is a "ghost" or "phantom"
+root.bind("<Up>", lambda event: move_player(0, -STEP)) # funciton - basically, a fucntion taht you do not think you will ever
+root.bind("<Down>", lambda event: move_player(0, STEP)) # need again, but it allows you to ask a question and get an answer
 
 center_view_on_player()
 canvas.focus_set()
