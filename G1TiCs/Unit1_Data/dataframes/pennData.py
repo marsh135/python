@@ -8,7 +8,7 @@ years = ["Freshman", "Sophomore", "Junior", "Senior"]
 pathways = ["Early College", "Engineering", "Computer Science", "Business", "Marketing", "Early Childhood Education", "Culinary", "Criminal Justice", "Construction", "Bio Med"]
 names = []
 
-for i in range(20000):
+for i in range(500):
     names.append(f"{random.choice(fNames)} {random.choice(lNames)}")
 
 data = {

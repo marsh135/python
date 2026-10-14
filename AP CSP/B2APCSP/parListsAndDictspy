@@ -1,0 +1,77 @@
+print("Welcome to the B2 Diner!")
+print("~"*25)
+
+dinerMenu = {
+    "Bacon": 4.00,
+    "Eggs": .75,
+    "Spaghetti": 8.00,
+    "Hamburger": 6.00
+}
+running = True
+while running: 
+    print("")
+    for item in dinerMenu:
+        print(item)
+    selection = input("What would you like: ").strip().capitalize()
+    if selection in dinerMenu:
+        print("The", selection, "costs $"+ str(dinerMenu[selection]))
+    else:
+        print("We do not have", selection)
+    done = input("Does that complete your order: (Y/N)").strip().upper()
+    if done == "Y":
+        running = False
+
+print("We will get that started for you!")
+
+"""
+menu=["", 
+    "Bacon", 
+    "Eggs", 
+    "Spaghetti", 
+    "Hamburger", 
+    "Special: Meatloaf"
+]
+prices=[0, 4.00, .50, 8.00, 6.00, 1.25]
+
+
+print("Have a look at our menu!")
+
+for i in range(1,len(menu)):
+    print(str(i),"Item: ", menu[i])
+choice =  int(input("Selection:"))
+
+print("Your", menu[choice], "costs $" + str(prices[choice])+".")
+
+
+
+"""
+
+
+
+
+
+
+
+
+
+
+
+
+
+'''
+
+fruits = ["apple", "pineapple", "orange", "dragonfruit", "grape"]
+
+#Print
+#print(fruits)
+
+#Print prettier
+for i in fruits:
+    print(i)
+
+fruits.insert(2, "strawberry")
+
+for i in fruits:
+    print(i)
+
+'''
