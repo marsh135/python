@@ -1,9 +1,10 @@
 def d2b(num):
     answer=[]
+    num=int(num)
     digit = 0
     if num == 0:
-        return "0"
-    while num >0:
+        return 0
+    while num > 0 :
         digit =  num %2
         answer.append(str(digit))
         num = num//2
