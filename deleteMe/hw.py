@@ -1,5 +1,0 @@
-print("WELCOME TO THE PROGRAM!")
-name = input("Please enter your name:  ")
-age = input("Please enter your age:  ")
-hSchool =  input("Please enter your high school:  ")
-print("Hello," ,name, "you are", age, "years old and go to", hSchool, "high school." )

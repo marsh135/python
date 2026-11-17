@@ -11,7 +11,7 @@ councelors = ["Mr. Smith", "Ms. Johnson", "Mrs. Williams", "Mr. Brown", "Ms. Jon
 cEmails = ["smith@example.com", "johson@example.com", "williams@example.com","brown@example.com", "jones@example.com"]
 deans = ["Mr. White", "Ms. Green", "Mrs. Black", "Mr. Blue", "Ms. Red"]
 dEmails = ["white@example.com", "green@example.com", "black@example.com","blue@example.com", "red@example.com"]
-dataPoints= 2000
+dataPoints= 200000
 for i in range(dataPoints):
     names.append(f"{random.choice(fNames)} {random.choice(lNames)}")
 
